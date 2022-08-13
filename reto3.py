@@ -35,15 +35,20 @@ apoo=Course("1","apoo","jonatan")
 class Profesor(Parcial):
 
     def __init__(self,id,nombre,edad):
-        
         self.id=id
         self.edad=edad
+        self.nombre=nombre
         self.cargo="profesor"
         self.materias=[]
         self.parciales=[]
 
+    def CrearParcial(self,curso,nombre,porcentaje,preguntas):
+        super().__init__(curso,nombre,porcentaje,preguntas)
+        self.parciales.append([curso,nombre,porcentaje,preguntas])
+
+        
 jonatan=Profesor("1a","jonatan alberto de jesus",25)
-jonatan.Create(apoo,"examen final",25,"1) si nado me mojo? 2)si salto me elevo? 3) si bajo voy hacia arriba? ")
+jonatan.CrearParcial(apoo,"examen final",25,"1) si nado me mojo? 2)si salto me elevo? 3) si bajo voy hacia arriba? ")
 print(apoo.parciales)
 
 class Student():
