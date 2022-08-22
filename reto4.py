@@ -1,5 +1,3 @@
-
-
 class User():
     def __init__(self,id,user_name,balance,order_list):
         self.id=int(id)
@@ -11,42 +9,53 @@ class User():
     def add_product_to_car(self,id_product):
         self.order_list.append(str(id_product))
 
-    #Terminar orden
+    #no se     
     def consolidate_order(self,order_id):
-        return self 
+        return 
 
+    #añadir saldo al usuario
     def add_to_balance(self,amount):
         if type(amount)==int:
             self.balance+=amount
         else:
             print("digite un número valido")
 
+    #no se
     def plot_order_history(self):
-        return self.order_list
+        pass
 
 juan=User(2,"juan marinilla",1231.123,[])
 juan.add_product_to_car(123)
 juan.add_to_balance(12)
 print(juan.balance)
-print(juan.consolidate_order(2))
 
-class Order(User):
-    def __init__(self,id,product,date,total,status):
+class Order():
+    def __init__(self,usuario,id,date,total,status):
+        self.usuario=usuario
         self.id=int(id)
-        self.product_list=list(product)
+        self.product_list=usuario.order_list     #tomamos la lista del usuario
         self.date=date
         self.total=float(total)
         self.status=status
 
+ca112d=Order(juan,1,"12/23/2222",123123,True)
+print(ca112d.product_list)
 
-
-class Product(Order):
+class Product():
     def __init__(self, id, name, price, dict):
         self.id=int(id)
         self.name=str(name)
         self.price=float(price)
         self.price_history=dict
 
-    def update_prince(self,date,price):
+    def update_price(self,date,price):
         self.price=float(price)
-        self.price_history.uppdate({date:price})
+        self.price_history[date]=price
+
+papa=Product(2,"papa",12.3,{})
+print(papa.price)
+print(papa.price_history)
+
+papa.update_price("12/321/3",123)
+print(papa.price)
+print(papa.price_history)
