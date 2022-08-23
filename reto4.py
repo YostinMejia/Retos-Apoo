@@ -41,6 +41,7 @@ class User():
         #Graficamos el cambio de los precios
         x=[]
         y=[]
+        plt.style.use(['dark_background'])
         for i in product.price_history:
             x.append(i)
             y.append(product.price_history[i])
@@ -56,6 +57,7 @@ class User():
         plt.ylabel("Precio")
         plt.title(f"Cambio del precio de la {product.name}")
         plt.show()
+
 
         #Graficamos 
 
