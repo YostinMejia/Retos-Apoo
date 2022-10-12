@@ -28,6 +28,7 @@ class Teacher(Person):
 
 
 if __name__=="__main__":
+    
         yostin=Student("yostin",18,"negro")
         octavio=Student("Octavio",32,"negro")
 
