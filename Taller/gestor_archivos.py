@@ -1,7 +1,7 @@
 import pandas as pd
 import xml.etree.ElementTree as ET
 import csv
-from abc import ABC, abstractmethod, abstractproperty
+from abc import abstractproperty
 
 
 class Gestor_De_Archivo:
@@ -17,10 +17,15 @@ class Gestor_De_Archivo:
     def extraer_informacion(self,archivo)-> dict:
         pass
 
+
 class GestorDeArchivo(Gestor_De_Archivo):
 
-    def cargar_archivo(self, archivo):
-        pass
+    def __init__(self) -> None:
+        self.datos={}
+
+    def cargar_archivo(self):
+        print("Cargando archivo............")
+        print("Archivo cargado")
         
     def determinar_extension(self, archivo):
 
@@ -28,23 +33,24 @@ class GestorDeArchivo(Gestor_De_Archivo):
 
         return extension
         
-    @abstractproperty
     def extraer_informacion(self,archivo)-> dict:
         pass
+
+    def ordenar_por_nombres(self, datos:dict):
+        ordenados=sorted(datos)
+        return ordenados
+    
+    def ordenar_por_edades(self,datos:dict):
+
+        ordenados = dict(sorted(datos.items(), key=lambda item:item[1]["edad"]))
+        return ordenados
 
 
 class  GestorDeArchivosXml(GestorDeArchivo):
 
-    def __init__(self) -> None:
-        self.datos={}
-
-    def cargar_archivo(self, archivo):
-        print("Cargando Archivo.....................")
-        print("Archivo Cargado")
-        return archivo
-        
-
+    
     def extraer_informacion(self,archivo)-> dict:
+        self.cargar_archivo()
 
         tree=ET.parse(archivo)
         root=tree.getroot()
@@ -64,15 +70,13 @@ class  GestorDeArchivosXml(GestorDeArchivo):
 
         return self.datos
         
-gestor=GestorDeArchivosXml()
-gestor.determinar_extension("Taller_herencia.csv")
 
-class GestorDeArchivosXlsx:
-    
-    def __init__(self) -> None:
-        self.datos={}
+class GestorDeArchivosXlsx(GestorDeArchivo):
 
     def extraer_informacion(self,archivo)-> dict:
+        self.cargar_archivo()
+
+
         columns = ['Nombre','Id','Email','Edad']
         df2 = pd.read_excel(archivo, header=None,names=columns,skiprows=1)
         valores=df2.values
@@ -83,12 +87,11 @@ class GestorDeArchivosXlsx:
         return self.datos
         
 
-class GestorDeArchivosTxt:
-
-    def __init__(self) -> None:
-        self.datos={}
+class GestorDeArchivosTxt(GestorDeArchivo):
 
     def extraer_informacion(self,archivo)-> dict:
+        self.cargar_archivo()
+
         with open("Taller_herencia.txt","r") as txt:
             for _ in txt:
                 valores=txt.readline().split()
@@ -98,12 +101,10 @@ class GestorDeArchivosTxt:
         return self.datos
             
 
-class GestorDeArchivosCsv:
-    
-    def __init__(self) -> None:
-        self.datos={}
+class GestorDeArchivosCsv(GestorDeArchivo):
 
     def extraer_informacion(self,archivo)-> dict:
+        self.cargar_archivo()
 
         with open(archivo,"r") as csv_file:
             csvreader=csv.reader(csv_file)
