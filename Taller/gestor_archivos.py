@@ -44,6 +44,17 @@ class GestorDeArchivo(Gestor_De_Archivo):
 
         ordenados = dict(sorted(datos.items(), key=lambda item:item[1]["edad"]))
         return ordenados
+    
+    def determinar_promedio(self,datos:dict):
+        total_edades=0
+        for i in datos:
+            total_edades+=datos[i]["edad"]
+
+        promedio=total_edades/len(datos)
+        
+        return promedio
+        
+
 
 
 class  GestorDeArchivosXml(GestorDeArchivo):
